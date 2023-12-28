@@ -65,7 +65,7 @@ sections:
         - title: Adjunct Instructor - CS
           company: Colorado School of Mines
           company_url: 'mines.edu'
-          company_logo: https://www.minesnewsroom.com/sites/default/files/2023-03/mines-logo-triangle-blue.jpg
+          company_logo: ''
           location: Colorado
           date_start: '2023-08-01'
           date_end: ''
@@ -73,7 +73,7 @@ sections:
         - title: Research Assistant
           company: Colorado School of Mines
           company_url: 'mines.edu'
-          company_logo: https://www.minesnewsroom.com/sites/default/files/2023-03/mines-logo-triangle-blue.jpg
+          company_logo: ''
           location: Colorado
           date_start: '2022-01-01'
           date_end: ''
