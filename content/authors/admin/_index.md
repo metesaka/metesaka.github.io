@@ -10,7 +10,7 @@ first_name: Umut Mete
 last_name: Saka
 
 # Status emoji
-status:  🦆
+status:  
   icon:  🦆
 
 # Is this the primary user of the site?
