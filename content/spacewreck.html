@@ -107,9 +107,17 @@
             let character = document.getElementById("character").value;
             let newNode = document.getElementById("newNode").value;
 
+
+            // Record and display the move in history
+            let historyList = document.getElementById("historyList");
+
+
             if (canMove(character, newNode)) {
                 characters[character] = newNode;
                 checkWin(newNode);
+                let newMove = document.createElement("li");
+                newMove.innerText = `${character} moved to Node ${newNode}`;
+                historyList.appendChild(newMove);
             } else {
                 alert("Invalid move!");
             }
@@ -117,11 +125,6 @@
             // Update game status
             document.getElementById("gameStatus").innerText = `Rocket  at Node ${characters["ROCKET"]}, Lucky at Node ${characters["LUCKY"]}`;
 
-            // Record and display the move in history
-            let historyList = document.getElementById("historyList");
-            let newMove = document.createElement("li");
-            newMove.innerText = `${character} moved to Node ${newNode}`;
-            historyList.appendChild(newMove);
 
         }
 
