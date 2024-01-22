@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graph Game</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+        .game-container {
+            margin: 10px;
+            flex-basis: 40%; /* Increased width */
+            padding: 20px;
+            border: 2px solid #ddd; /* Added border */
+            border-radius: 10px; /* Rounded corners */
+            background-color: #f9f9f9; /* Light background */
+        }
+        .input-container {
+            margin-top: 10px;
+        }
+        .instructions, .gameStatus {
+            margin-top: 10px;
+            font-size: 1.3em;
+        }
+        .image-container {
+            margin: 10px;
+            flex-basis: 35%; /* Decreased width */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            padding: 5px 10px;
+            margin-left: 10px;
+            background-color: #4CAF50; /* Green background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-container">
+            <h1>Graph Game</h1>
+            <div id="gameStatus" class="gameStatus">Loading game...</div>
+            <div class="instructions" >
+                Move Rocket (R) or Lucky (L) to an adjacent node:
+            </div>
+            <div class="input-container">
+                <select id="character">
+                    <option value='ROCKET'>Rocket</option>
+                    <option value='LUCKY'>Lucky</option>
+                </select>
+                <select id="newNode">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="GOAL">GOAL</option>
+                </select>
+                <button onclick="makeMove()">Move</button>
+            </div>
+            <div id="moveHistory" class="move-history">
+                <h3>Move History</h3>
+                <ul id="historyList"></ul>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="l1.png" alt="Graph Game Illustration">
+        </div>
+    </div>
+
+    <script>
+        // Game setup
+        let nodes = {'A': 'G', 'B': 'R', 'C': 'G', 'D': 'G', 'E': 'R', 'F': 'R', 'G': 'G', 'GOAL': 'Goal'};
+        let edges = {'AC': 'G', 'AD': 'G', 'BA': 'G', 'BC': 'R', 'CE': 'G', 'CF': 'R', 'DB': 'G', 'DC': 'G', 'EG': 'G', 'EGOAL': 'R', 'FD': 'R', 'FE': 'R', 'FG': 'R', 'FGOAL': 'G', 'GGOAL': 'R'};
+        let characters = {'ROCKET': 'A', 'LUCKY': 'B'}; // Character positions
+
+        function initGame() {
+            document.getElementById("gameStatus").innerText = `Rocket  at Node ${characters["ROCKET"]}, Lucky at Node ${characters["LUCKY"]}`;
+        }
+
+        function canMove(character, newNode) {
+            let currentPos = characters[character];
+            let edgeKey = [currentPos, newNode].join('');
+            let otherCharacter = character === 'ROCKET' ? 'LUCKY' : 'ROCKET';
+
+            // Check if edge exists and if the other character is on a node with the matching color
+            return edges[edgeKey] && nodes[characters[otherCharacter]] === edges[edgeKey];
+        }
+
+        function makeMove() {
+            let character = document.getElementById("character").value;
+            let newNode = document.getElementById("newNode").value;
+
+            if (canMove(character, newNode)) {
+                characters[character] = newNode;
+                checkWin(newNode);
+            } else {
+                alert("Invalid move!");
+            }
+
+            // Update game status
+            document.getElementById("gameStatus").innerText = `Rocket  at Node ${characters["ROCKET"]}, Lucky at Node ${characters["LUCKY"]}`;
+
+            // Record and display the move in history
+            let historyList = document.getElementById("historyList");
+            let newMove = document.createElement("li");
+            newMove.innerText = `${character} moved to Node ${newNode}`;
+            historyList.appendChild(newMove);
+
+        }
+
+        function checkWin(newNode) {
+            if (newNode === 'GOAL') {
+                alert("Game won!");
+                document.getElementById("gameStatus").innerText = "Game won! Reload to play again.";
+            }
+        }
+
+        window.onload = initGame;
+    </script>
+</body>
+</html>
